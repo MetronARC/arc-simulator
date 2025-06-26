@@ -625,15 +625,14 @@ main .recent-orders a{
     }
 }
 .machine-input,
-.date-input {
+.date-input,
+.area-input {
   border: 1px solid var(--color-dark);
   padding: 10px;
   border-radius: 20px;
-  /* Increased padding for more height */
   font-size: 16px;
   width: 100%;
   box-sizing: border-box;
-  /* Ensures padding is included in width */
   background: var(--color-white);
   color: var(--color-dark);
   margin-top: 0.5rem;
@@ -654,6 +653,22 @@ main .recent-orders a{
   background-color: #fff;
   border-radius: 50%;
   color: white;
+}
+
+/* Style for select dropdown arrow */
+.area-input {
+  appearance: auto;
+  -webkit-appearance: auto;
+  -moz-appearance: auto;
+  padding-right: 30px;
+  cursor: pointer;
+}
+
+.area-input option {
+  padding: 10px;
+  font-size: 16px;
+  background: var(--color-white);
+  color: var(--color-dark);
 }
 
 /* Loading Spinner */
