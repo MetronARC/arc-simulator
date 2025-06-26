@@ -80,4 +80,21 @@ class Monitoring extends BaseController
         // Return JSON response without specifying the return type as string
         return $this->response->setJSON($results);
     }
+
+    public function getMachineDetails($areaName, $machineId)
+    {
+        $db = \Config\Database::connect();
+        
+        // Fetch specific machine details
+        $query = $db->query("SELECT MachineID, Area, Name, `user-image` FROM `$areaName` WHERE MachineID = ?", [$machineId]);
+        $result = $query->getRowArray();
+        
+        // Handle local image path
+        if (!empty($result['user-image'])) {
+            // Convert the image filename to a full URL path
+            $result['user-image'] = base_url('user-image/' . $result['user-image']);
+        }
+        
+        return $this->response->setJSON($result);
+    }
 }
