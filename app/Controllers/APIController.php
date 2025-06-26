@@ -396,14 +396,22 @@ class APIController extends BaseController
                     // Calculate the ArcTotal as the difference between ArcOff and ArcOn
                     $ArcTotal = date_diff(date_create($ArcOn), date_create($Time))->format('%H:%I:%S');
 
-                    // Update for ArcOff
+                    // First get the max ID in a separate query
+                    $maxIdQuery = $builder->select('MAX(id) as max_id')
+                        ->where('MachineID', $MachineID)
+                        ->where('Area', $Area)
+                        ->get();
+                    
+                    $maxId = $maxIdQuery->getRow()->max_id;
+
+                    // Update for ArcOff using the obtained max ID
                     $dataArcOff = [
                         'ArcOff' => $Time,
                         'ArcTotal' => $ArcTotal,
                         'CurrentDC' => $CurrentDC,
                         'Voltage' => $VoltageDC
                     ];
-                    if ($builder->where('id', "(SELECT MAX(id) FROM $tableHistory WHERE MachineID = '$MachineID' AND Area = '$Area')", false)
+                    if ($builder->where('id', $maxId)
                         ->update($dataArcOff)
                     ) {
                         // Update the 'State' in area table to 'IDLE'
