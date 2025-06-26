@@ -360,7 +360,8 @@ class APIController extends BaseController
                     'WeldID' => $WeldID,
                     'Name' => $Name,
                     'ArcOn' => $Time,
-                    'Date' => $Date
+                    'Date' => $Date,
+                    'State' => 'ON'
                 ];
                 if ($builder->insert($dataArcOn)) {
                     // Check for previous rows with NULL ArcOff and update them
